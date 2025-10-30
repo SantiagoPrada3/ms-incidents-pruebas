@@ -1,0 +1,117 @@
+version: "3.8"
+
+services:
+  # =============================================================================
+  # MICROSERVICIO DE RECLAMOS E INCIDENTES
+  # =============================================================================
+  vg-ms-claims-incidents:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: vallegrande/vg-ms-claims-incidents:latest
+    container_name: vg-ms-claims-inc
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      # CONFIGURACIÓN BÁSICA
+      - SPRING_PROFILES_ACTIVE=dev
+      - NOMBRE_MICROSERVICIO=claims-incidents
+      - SERVER_PORT=8080
+
+      # JWT CONFIGURATION - These will be used if your application.yml points to them
+      - JWT_SECRET=dev-secret-key-for-local-development-only  # Replace with a strong, generated key for production
+      - JWT_EXPIRATION=3600000
+      - JWT_REFRESH_EXPIRATION=86400000
+      - JWT_ISSUER=vallegrande-claims-incidents
+
+      # INFORMACIÓN DE LA APLICACIÓN
+      - APP_NAME=Claims Incidents Microservice
+      - APP_DESCRIPTION=API para la gestión de reclamos e incidentes
+      - APP_VERSION=1.0.0
+      - APP_CONTACT_NAME=Santiago
+
+      # JAVA OPTIONS
+      - JAVA_OPTS=-Xmx512m -Xms256m
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - jass-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # =============================================================================
+  # SONARQUBE
+  # =============================================================================
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+      - "9092:9092"
+    environment:
+      - SONARQUBE_JDBC_USERNAME=sonar
+      - SONARQUBE_JDBC_PASSWORD=sonarpass
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://sonarqube-db:5432/sonar
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    networks:
+      - jass-network
+    depends_on:
+      - sonarqube-db
+
+  # =============================================================================
+  # SONARQUBE DATABASE
+  # =============================================================================
+  sonarqube-db:
+    image: postgres:12
+    container_name: sonarqube-db
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonarpass
+      - POSTGRES_DB=sonar
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    networks:
+      - jass-network
+
+  # =============================================================================
+  # JENKINS
+  # =============================================================================
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8081:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - jass-network
+    user: root
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  jass-network:
+    driver: bridge
+    name: jass-digital-network 
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+volumes:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  postgresql_data:
+  jenkins_home:
