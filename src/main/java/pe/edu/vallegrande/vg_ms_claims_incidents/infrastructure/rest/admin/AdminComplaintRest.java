@@ -22,11 +22,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @Tag(name = "Admin Complaints", description = "API de administración para gestión completa de quejas")
 public class AdminComplaintRest {
 
-    private static final Logger log = LoggerFactory.getLogger(ComplaintRest.class);
+    private static final Logger log = LoggerFactory.getLogger(AdminComplaintRest.class);
 
     private final ComplaintService complaintService;
 
-    public ComplaintRest(ComplaintService complaintService) {
+    public AdminComplaintRest(ComplaintService complaintService) {
         this.complaintService = complaintService;
     }
 

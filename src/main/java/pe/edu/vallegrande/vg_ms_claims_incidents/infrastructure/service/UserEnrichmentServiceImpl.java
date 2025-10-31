@@ -4,14 +4,17 @@ import org.springframework.stereotype.Service;
 import pe.edu.vallegrande.vg_ms_claims_incidents.application.services.UserEnrichmentService;
 import pe.edu.vallegrande.vg_ms_claims_incidents.infrastructure.client.UserApiClient;
 import pe.edu.vallegrande.vg_ms_claims_incidents.infrastructure.dto.UserDTO;
-import reactor.core.publisher.Mono;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-@Slf4j
 @Service
 public class UserEnrichmentServiceImpl implements UserEnrichmentService {
+
+    private static final Logger log = LoggerFactory.getLogger(UserEnrichmentServiceImpl.class);
 
     private final UserApiClient userApiClient;
 

@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RestController
 @RequestMapping("/api/client/complaints")
 @Tag(name = "Client Complaints", description = "API para clientes para gestión de quejas")
-public class ComplaintRest {
+public class ClientComplaintRest {
 
     private static final Logger log = LoggerFactory.getLogger(ComplaintRest.class);
 

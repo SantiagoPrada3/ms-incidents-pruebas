@@ -1,7 +1,6 @@
 package pe.edu.vallegrande.vg_ms_claims_incidents.infrastructure.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
@@ -10,7 +9,6 @@ import java.util.List;
 /**
  * DTO para mapear la respuesta del MS-USUARIOS
  */
-@Data
 public class UserServiceResponseDTO {
     
     @JsonProperty("success")
@@ -22,7 +20,31 @@ public class UserServiceResponseDTO {
     @JsonProperty("data")
     private UserServiceDataDTO data;
     
-    @Data
+    // Explicit getters and setters to avoid Lombok compilation issues
+    public Boolean getSuccess() {
+        return success;
+    }
+    
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+    
+    public String getMessage() {
+        return message;
+    }
+    
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    
+    public UserServiceDataDTO getData() {
+        return data;
+    }
+    
+    public void setData(UserServiceDataDTO data) {
+        this.data = data;
+    }
+    
     public static class UserServiceDataDTO {
         @JsonProperty("id")
         private String id;
@@ -71,9 +93,137 @@ public class UserServiceResponseDTO {
         
         @JsonProperty("street")
         private StreetDTO street;
+        
+        // Explicit getters and setters to avoid Lombok compilation issues
+        public String getId() {
+            return id;
+        }
+        
+        public void setId(String id) {
+            this.id = id;
+        }
+        
+        public String getUserCode() {
+            return userCode;
+        }
+        
+        public void setUserCode(String userCode) {
+            this.userCode = userCode;
+        }
+        
+        public String getFirstName() {
+            return firstName;
+        }
+        
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+        
+        public String getLastName() {
+            return lastName;
+        }
+        
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+        
+        public String getDocumentType() {
+            return documentType;
+        }
+        
+        public void setDocumentType(String documentType) {
+            this.documentType = documentType;
+        }
+        
+        public String getDocumentNumber() {
+            return documentNumber;
+        }
+        
+        public void setDocumentNumber(String documentNumber) {
+            this.documentNumber = documentNumber;
+        }
+        
+        public String getEmail() {
+            return email;
+        }
+        
+        public void setEmail(String email) {
+            this.email = email;
+        }
+        
+        public String getPhone() {
+            return phone;
+        }
+        
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+        
+        public String getAddress() {
+            return address;
+        }
+        
+        public void setAddress(String address) {
+            this.address = address;
+        }
+        
+        public List<String> getRoles() {
+            return roles;
+        }
+        
+        public void setRoles(List<String> roles) {
+            this.roles = roles;
+        }
+        
+        public String getStatus() {
+            return status;
+        }
+        
+        public void setStatus(String status) {
+            this.status = status;
+        }
+        
+        public LocalDateTime getCreatedAt() {
+            return createdAt;
+        }
+        
+        public void setCreatedAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+        }
+        
+        public LocalDateTime getUpdatedAt() {
+            return updatedAt;
+        }
+        
+        public void setUpdatedAt(LocalDateTime updatedAt) {
+            this.updatedAt = updatedAt;
+        }
+        
+        public OrganizationDTO getOrganization() {
+            return organization;
+        }
+        
+        public void setOrganization(OrganizationDTO organization) {
+            this.organization = organization;
+        }
+        
+        public ZoneDTO getZone() {
+            return zone;
+        }
+        
+        public void setZone(ZoneDTO zone) {
+            this.zone = zone;
+        }
+        
+        public StreetDTO getStreet() {
+            return street;
+        }
+        
+        public void setStreet(StreetDTO street) {
+            this.street = street;
+        }
     }
     
-    @Data
     public static class OrganizationDTO {
         @JsonProperty("organizationId")
         private String organizationId;
@@ -95,9 +245,65 @@ public class UserServiceResponseDTO {
         
         @JsonProperty("status")
         private String status;
+        
+        // Explicit getters and setters to avoid Lombok compilation issues
+        public String getOrganizationId() {
+            return organizationId;
+        }
+        
+        public void setOrganizationId(String organizationId) {
+            this.organizationId = organizationId;
+        }
+        
+        public String getOrganizationCode() {
+            return organizationCode;
+        }
+        
+        public void setOrganizationCode(String organizationCode) {
+            this.organizationCode = organizationCode;
+        }
+        
+        public String getOrganizationName() {
+            return organizationName;
+        }
+        
+        public void setOrganizationName(String organizationName) {
+            this.organizationName = organizationName;
+        }
+        
+        public String getLegalRepresentative() {
+            return legalRepresentative;
+        }
+        
+        public void setLegalRepresentative(String legalRepresentative) {
+            this.legalRepresentative = legalRepresentative;
+        }
+        
+        public String getPhone() {
+            return phone;
+        }
+        
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+        
+        public String getAddress() {
+            return address;
+        }
+        
+        public void setAddress(String address) {
+            this.address = address;
+        }
+        
+        public String getStatus() {
+            return status;
+        }
+        
+        public void setStatus(String status) {
+            this.status = status;
+        }
     }
     
-    @Data
     public static class ZoneDTO {
         @JsonProperty("zoneId")
         private String zoneId;
@@ -113,9 +319,49 @@ public class UserServiceResponseDTO {
         
         @JsonProperty("status")
         private String status;
+        
+        // Explicit getters and setters to avoid Lombok compilation issues
+        public String getZoneId() {
+            return zoneId;
+        }
+        
+        public void setZoneId(String zoneId) {
+            this.zoneId = zoneId;
+        }
+        
+        public String getZoneCode() {
+            return zoneCode;
+        }
+        
+        public void setZoneCode(String zoneCode) {
+            this.zoneCode = zoneCode;
+        }
+        
+        public String getZoneName() {
+            return zoneName;
+        }
+        
+        public void setZoneName(String zoneName) {
+            this.zoneName = zoneName;
+        }
+        
+        public String getDescription() {
+            return description;
+        }
+        
+        public void setDescription(String description) {
+            this.description = description;
+        }
+        
+        public String getStatus() {
+            return status;
+        }
+        
+        public void setStatus(String status) {
+            this.status = status;
+        }
     }
     
-    @Data
     public static class StreetDTO {
         @JsonProperty("streetId")
         private String streetId;
@@ -131,6 +377,47 @@ public class UserServiceResponseDTO {
         
         @JsonProperty("status")
         private String status;
+        
+        // Explicit getters and setters to avoid Lombok compilation issues
+        public String getStreetId() {
+            return streetId;
+        }
+        
+        public void setStreetId(String streetId) {
+            this.streetId = streetId;
+        }
+        
+        public String getStreetCode() {
+            return streetCode;
+        }
+        
+        public void setStreetCode(String streetCode) {
+            this.streetCode = streetCode;
+        }
+        
+        public String getStreetName() {
+            return streetName;
+        }
+        
+        public void setStreetName(String streetName) {
+            this.streetName = streetName;
+        }
+        
+        public String getStreetType() {
+            return streetType;
+        }
+        
+        public void setStreetType(String streetType) {
+            this.streetType = streetType;
+        }
+        
+        public String getStatus() {
+            return status;
+        }
+        
+        public void setStatus(String status) {
+            this.status = status;
+        }
     }
     
     /**

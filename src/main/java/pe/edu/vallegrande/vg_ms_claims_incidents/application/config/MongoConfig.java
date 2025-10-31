@@ -10,12 +10,14 @@ import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguratio
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.SimpleReactiveMongoDatabaseFactory;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 @Configuration
 @EnableReactiveMongoRepositories(basePackages = "pe.edu.vallegrande.vg_ms_claims_incidents.infrastructure.repository")
 public class MongoConfig extends AbstractReactiveMongoConfiguration {
+
+    private static final Logger log = LoggerFactory.getLogger(MongoConfig.class);
 
     @Value("${spring.data.mongodb.uri}")
     private String mongoUri;

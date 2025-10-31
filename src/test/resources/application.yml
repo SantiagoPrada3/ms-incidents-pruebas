@@ -1,0 +1,56 @@
+# ================================
+# TEST CONFIGURATION
+# ================================
+app:
+  name: Claims Incidents Microservice - Test
+  data:
+    initialize: false
+  external:
+    user-service:
+      base-url: http://localhost:12345  # URL falsa para evitar llamadas externas
+      organization-id: test-org
+      timeout: 1s
+      retry-attempts: 0
+      circuit-breaker:
+        enabled: false
+
+# ================================
+# SERVER CONFIGURATION
+# ================================
+server:
+  port: 0  # Puerto aleatorio para evitar conflictos
+
+# ================================
+# SPRING CONFIGURATION
+# ================================
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/test
+  autoconfigure:
+    exclude: 
+      - org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration
+
+# ================================
+# LOGGING CONFIGURATION
+# ================================
+logging:
+  level:
+    root: WARN
+    pe.edu.vallegrande: DEBUG
+    org.springframework: WARN
+    org.springframework.web: WARN
+    org.springframework.data.mongodb: WARN
+    org.springframework.web.reactive: WARN
+    reactor.netty: WARN
+
+# ================================
+# API DOCUMENTATION (DISABLED FOR TESTS)
+# ================================
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
