@@ -23,13 +23,13 @@ pipeline {
         
         stage('Build') {
             steps {
-                sh 'mvn clean compile -DskipTests'
+                bat 'mvn clean compile -DskipTests'
             }
         }
         
         stage('Run Unit Tests with Coverage') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
             post {
                 always {
@@ -43,11 +43,11 @@ pipeline {
             steps {
                 // For SonarQube Cloud, we don't need to specify the host URL
                 // The token and organization are passed as properties
-                sh """
-                    mvn sonar:sonar \
-                    -Dsonar.projectKey=SantiagoPrada3_ms-incidents-pruebas \
-                    -Dsonar.organization=${SONAR_ORGANIZATION} \
-                    -Dsonar.host.url=https://sonarcloud.io \
+                bat """
+                    mvn sonar:sonar ^
+                    -Dsonar.projectKey=SantiagoPrada3_ms-incidents-pruebas ^
+                    -Dsonar.organization=${SONAR_ORGANIZATION} ^
+                    -Dsonar.host.url=https://sonarcloud.io ^
                     -Dsonar.login=${SONAR_TOKEN}
                 """
             }
@@ -63,7 +63,7 @@ pipeline {
         
         stage('Package') {
             steps {
-                sh 'mvn package -DskipTests'
+                bat 'mvn package -DskipTests'
             }
         }
     }
