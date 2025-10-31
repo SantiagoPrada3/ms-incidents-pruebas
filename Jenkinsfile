@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/tu-organizacion/vg-ms-claims-incidents.git'
+                git branch: 'main', url: 'https://github.com/SantiagoPrada3/ms-incidents-pruebas.git', credentialsId: 'github-token'
             }
         }
         
