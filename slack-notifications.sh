@@ -2,7 +2,8 @@
 
 # Script para enviar notificaciones a Slack
 # Variables de configuración
-SLACK_WEBHOOK_URL="$SLACK_WEBHOOK_URL"SLACK_CHANNEL="#jenkins-notifications"
+SLACK_WEBHOOK_URL="${SLACK_WEBHOOK_URL}"
+SLACK_CHANNEL="#jenkins-notifications"
 SLACK_USERNAME="JenkinsBot"
 
 # Función para enviar mensaje a Slack

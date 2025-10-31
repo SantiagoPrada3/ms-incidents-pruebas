@@ -11,7 +11,7 @@ pipeline {
         // SonarQube Cloud token - configure this in Jenkins credentials
         SONAR_TOKEN = credentials('sonar-token')
         // Organization key for SonarQube Cloud
-        SONAR_ORGANIZATION = 'your-organization-key'
+        SONAR_ORGANIZATION = 'santiagoprada'
     }
     
     stages {
@@ -45,7 +45,7 @@ pipeline {
                 // The token and organization are passed as properties
                 sh """
                     mvn sonar:sonar \
-                    -Dsonar.projectKey=vg-ms-claims-incidents \
+                    -Dsonar.projectKey=SantiagoPrada3_ms-incidents-pruebas \
                     -Dsonar.organization=${SONAR_ORGANIZATION} \
                     -Dsonar.host.url=https://sonarcloud.io \
                     -Dsonar.login=${SONAR_TOKEN}
@@ -71,11 +71,33 @@ pipeline {
     post {
         success {
             echo 'Pipeline ejecutado correctamente'
-            slackSend channel: '#jenkins-notifications', message: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' completed successfully"
+            slackSend(
+                channel: '#notificaciones-dev',
+                color: '#36a64f',
+                message: "✅ Build exitoso en ${env.JOB_NAME}",
+                teamDomain: 'jenkins-vz85724',
+                tokenCredentialId: 'slack-token'
+            )
         }
         failure {
             echo 'Pipeline fallido'
-            slackSend channel: '#jenkins-notifications', message: "FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' failed"
+            slackSend(
+                channel: '#notificaciones-dev',
+                color: '#ff0000',
+                message: "❌ Build fallido en ${env.JOB_NAME}",
+                teamDomain: 'jenkins-vz85724',
+                tokenCredentialId: 'slack-token'
+            )
+        }
+        unstable {
+            echo 'Pipeline inestable'
+            slackSend(
+                channel: '#notificaciones-dev',
+                color: '#ffff00',
+                message: "⚠️ Build inestable en ${env.JOB_NAME}",
+                teamDomain: 'jenkins-vz85724',
+                tokenCredentialId: 'slack-token'
+            )
         }
     }
 }
