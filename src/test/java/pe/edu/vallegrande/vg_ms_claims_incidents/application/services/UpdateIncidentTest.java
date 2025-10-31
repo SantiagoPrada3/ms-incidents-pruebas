@@ -88,12 +88,12 @@ class UpdateIncidentTest {
 
         // Then
         StepVerifier.create(result)
-                .expectComplete()
+                .expectError(RuntimeException.class)
                 .verify();
 
         verify(incidentRepository, times(1)).findById(incidentId);
         verify(incidentRepository, never()).save(any(Incident.class));
-        System.out.println("✅ Verificación exitosa: No se intentó guardar cuando el incidente no existe");
+        System.out.println("✅ Verificación exitosa: Se lanzó una excepción cuando el incidente no existe");
     }
 
     @Test

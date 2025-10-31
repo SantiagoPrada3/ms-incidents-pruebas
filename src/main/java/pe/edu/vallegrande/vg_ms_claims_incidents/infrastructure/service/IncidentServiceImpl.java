@@ -34,7 +34,13 @@ public class IncidentServiceImpl implements pe.edu.vallegrande.vg_ms_claims_inci
         log.info("Buscando incidente con ID: {}", id);
         return incidentRepository.findById(id)
                 .map(this::convertToDTO)
-                .doOnSuccess(incident -> log.info("Incidente encontrado: {}", incident.getIncidentCode()))
+                .doOnSuccess(incident -> {
+                    if (incident != null) {
+                        log.info("Incidente encontrado: {}", incident.getIncidentCode());
+                    } else {
+                        log.info("Incidente con ID {} no encontrado", id);
+                    }
+                })
                 .doOnError(error -> log.error("Error al buscar incidente con ID {}: {}", id, error.getMessage()));
     }
 
@@ -66,6 +72,7 @@ public class IncidentServiceImpl implements pe.edu.vallegrande.vg_ms_claims_inci
     public Mono<IncidentDTO> update(String id, IncidentDTO incidentDTO) {
         log.info("Actualizando incidente con ID: {}", id);
         return incidentRepository.findById(id)
+                .switchIfEmpty(Mono.error(new RuntimeException("Incidente con ID " + id + " no encontrado")))
                 .flatMap(existingIncident -> {
                     log.debug("Incidente existente encontrado: {}", existingIncident.getIncidentCode());
 
@@ -91,6 +98,7 @@ public class IncidentServiceImpl implements pe.edu.vallegrande.vg_ms_claims_inci
     public Mono<Void> deleteById(String id) {
         log.info("Eliminando incidente con ID: {}", id);
         return incidentRepository.findById(id)
+                .switchIfEmpty(Mono.error(new RuntimeException("Incidente con ID " + id + " no encontrado")))
                 .flatMap(incident -> {
                     log.debug("Marcando incidente como INACTIVE: {}", incident.getIncidentCode());
                     incident.setRecordStatus("INACTIVE");
@@ -105,6 +113,7 @@ public class IncidentServiceImpl implements pe.edu.vallegrande.vg_ms_claims_inci
     public Mono<IncidentDTO> restoreById(String id) {
         log.info("Restaurando incidente con ID: {}", id);
         return incidentRepository.findById(id)
+                .switchIfEmpty(Mono.error(new RuntimeException("Incidente con ID " + id + " no encontrado")))
                 .flatMap(incident -> {
                     log.debug("Marcando incidente como ACTIVE: {}", incident.getIncidentCode());
                     incident.setRecordStatus("ACTIVE");
